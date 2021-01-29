@@ -1,4 +1,4 @@
-import {sendGet, sendPost, sendPut, sendDelete} from '../postoffice'
+import {sendGet, sendPost, sendPut, sendDelete} from './postoffice'
 import {registerObject, registerEvent, registerReaction, fireEvent, chkSt} from 'absevents'
 
 

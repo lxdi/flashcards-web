@@ -2,8 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {Button} from 'react-bootstrap'
 import {registerEvent, registerReaction, fireEvent, chkSt} from 'absevents'
-
-import {DataConstants} from '../data/data-constants'
 import {filterOutMemoTask} from '../utils/task-utils'
 
 export class LeftSideBarContent extends React.Component {
