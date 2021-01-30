@@ -20,10 +20,10 @@ export class Main extends React.Component {
 		return (
 			<div>
 					{getModals()}
-					<Button bsStyle="default" bsSize='xsmall' onClick={() => fireEvent('deck-modal', 'open', [{id: 'new'}])}>Create Deck</Button>
 					<div>
 						<EntityList ents='deck-rep' modalName='deck-modal' model={[{link:true, name:'Title', prop:'title'}, {custom: (deck)=>getRepeatLink(deck), name: '', style:{width: '20%'}}]} />
 					</div>
+					<Button bsStyle="default" size='sm' onClick={() => fireEvent('deck-modal', 'open', [{id: 'new'}])}>Create Deck</Button>
 			</div>
 		)
 	}
@@ -38,7 +38,7 @@ const getModals = function(){
 										]}
 									/>
 
-						<EntityModal title={'Word'} name={'word-modal'} full={false} mode={{parentValName:'words'}}
+						<EntityModal title={'Word'} name={'word-modal'} full={false} mode={{parentValName:'words'}} styleClass={'word-modal-class'}
 				              fields={[
 				                {type:'text', valName:'value', label:'Value'},
 				                {type:'list', valName:'wordDefs', modalName:'word-def-modal', label:'Definition', model:[{link:true, name:'Definition', prop:'definition'}]},

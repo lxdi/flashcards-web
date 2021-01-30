@@ -12,11 +12,15 @@
 } */
 
 .repeat-modal-class {
-  width:500px
+  min-width:500px
+}
+
+.word-modal-class {
+  min-width: 800px;
 }
 
 .word-def-modal-class {
-  width:60%
+  min-width: 800px;
 }
 
 .textfields-table-style {

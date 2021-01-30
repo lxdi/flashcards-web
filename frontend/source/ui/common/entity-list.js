@@ -44,8 +44,8 @@ const getTableUI = function(comp, ents){
   }
 
   const tdsTitles = []
-  comp.props.model.forEach(prop => tdsTitles.push(<td style={prop.style} >{prop.name}</td>))
-  return <Table striped bordered condensed hover >
+  comp.props.model.forEach(prop => tdsTitles.push(<th style={prop.style} >{prop.name}</th>))
+  return <Table striped bordered condensed hover size="sm">
           <tbody>
             <tr>
               {tdsTitles}

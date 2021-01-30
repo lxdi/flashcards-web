@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {Button, ButtonToolbar,  DropdownButton, MenuItem,  FormGroup, ControlLabel, FormControl, Alert} from 'react-bootstrap'
+import {Button, FormLabel} from 'react-bootstrap'
 import {registerEvent, registerReaction, fireEvent, chkSt} from 'absevents'
 
 import {CommonModal} from '../common-modal'
@@ -118,12 +118,12 @@ const getFieldsUI = function(comp){
     }
 
     if(field.type == 'list'){
-      result.push(<div style={{marginTop:'5px'}}>
-                        <div>
-                          <Button bsStyle="default" bsSize='xsmall' onClick={() => fireEvent(field.modalName, 'open', [{id: newObjId}, comp.state.obj])}>Create {field.label}</Button>
-                        </div>
+      result.push(<div style={{marginTop:'5px', border: '1px solid lightgrey', borderRadius:'10px', padding: '3px'}}>
                         <div>
                           <EntityList ents={comp.state.obj[field.valName]} modalName={field.modalName} model={field.model}/>
+                        </div>
+                        <div>
+                          <Button variant="outline-primary" size="sm" onClick={() => fireEvent(field.modalName, 'open', [{id: newObjId}, comp.state.obj])}>Create {field.label}</Button>
                         </div>
                       </div>)
     }
@@ -135,7 +135,7 @@ const getFieldsUI = function(comp){
 const textField = function(obj, valName, label, isEdit){
   return {
     key: valName,
-    label: <ControlLabel>{label}</ControlLabel>,
+    label: <FormLabel>{label}</FormLabel>,
     field: <StatefulTextField obj={obj} valName={valName} isEdit={isEdit}/>
   }
 }
