@@ -6,6 +6,7 @@ import {registerEvent, registerReaction, fireEvent, chkSt, registerObject} from 
 
 import {EntityList} from './common/entity-list'
 import {EntityModal} from './common/entity-modal'
+import {RepeatModal} from './repetition/repeat-modal'
 
 export class Main extends React.Component {
 	constructor(props){
@@ -21,7 +22,7 @@ export class Main extends React.Component {
 					{getModals()}
 					<Button bsStyle="default" bsSize='xsmall' onClick={() => fireEvent('deck-modal', 'open', [{id: 'new'}])}>Create Deck</Button>
 					<div>
-						<EntityList ents='deck-rep' modalName='deck-modal' model={[{link:true, name:'Title', prop:'title'}]} />
+						<EntityList ents='deck-rep' modalName='deck-modal' model={[{link:true, name:'Title', prop:'title'}, {custom: (deck)=>getRepeatLink(deck), name: '', style:{width: '20%'}}]} />
 					</div>
 			</div>
 		)
@@ -52,5 +53,11 @@ const getModals = function(){
 						<EntityModal title={'Word Link'} name={'word-link-modal'} full={false} mode={{parentValName:'wordLinks'}}
 											fields={[{type:'text', valName:'url', label:'Url'}]}
 											/>
+
+						<RepeatModal/>
 					</div>
+}
+
+const getRepeatLink = function(deck){
+	return <a href='#' onClick={()=>fireEvent('repeat-modal', 'open', [deck])}>Repeat</a>
 }

@@ -28,6 +28,7 @@ export class EntityModal extends React.Component {
     this.state = createState(false, true, false);
 
     registerEvent(this.props.name, 'open', (stateSetter, obj, parent) => this.setState(createState(true, true, true, obj, parent)))
+
     registerEvent(this.props.name, 'close', (stateSetter) => {
       if(this.props.full){
         this.state.obj.isFull = false

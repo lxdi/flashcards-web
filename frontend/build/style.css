@@ -11,6 +11,10 @@
   margin: 5px;
 } */
 
+.repeat-modal-class {
+  width:500px
+}
+
 .textfields-table-style {
     width: 100%;
     white-space: nowrap;
