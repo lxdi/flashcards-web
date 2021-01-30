@@ -11,6 +11,8 @@ public class WordDef {
     @Id
     private String id;
 
+    private String definition;
+
     @ManyToOne(fetch = FetchType.LAZY)
     private Word word;
 
@@ -28,5 +30,13 @@ public class WordDef {
 
     public void setWord(Word word) {
         this.word = word;
+    }
+
+    public String getDefinition() {
+        return definition;
+    }
+
+    public void setDefinition(String definition) {
+        this.definition = definition;
     }
 }

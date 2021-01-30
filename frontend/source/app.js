@@ -5,7 +5,8 @@ import {Main} from './ui/main'
 import {LeftSideBarContent} from './ui/left-side-bar-content'
 import {OverlayInfo} from './ui/overlay'
 
-import {DeckModal} from './ui/deck-modal'
+// import {DeckModal} from './ui/deck-modal'
+// import {WordModal} from './ui/word-modal'
 
 import './data/deck-dao'
 
@@ -16,7 +17,6 @@ function rerender(){
 	ReactDOM.render(
 		<div style={{margin:'3px'}}>
 				<OverlayInfo />
-				<DeckModal/>
 				<div>
 					<Main />
 				</div>
