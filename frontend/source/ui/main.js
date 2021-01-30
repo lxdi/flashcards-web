@@ -46,7 +46,7 @@ const getModals = function(){
 				                ]}
 				              />
 
-						<EntityModal title={'Word Definition'} name={'word-def-modal'} full={false} mode={{parentValName:'wordDefs'}}
+						<EntityModal title={'Word Definition'} name={'word-def-modal'} full={false} mode={{parentValName:'wordDefs'}} styleClass={'word-def-modal-class'}
 											fields={[{type:'text', valName:'definition', label:'Definition'}]}
 											/>
 

@@ -14,7 +14,7 @@ export class RepeatModal extends React.Component {
 
     registerEvent('repeat-modal', 'close', (stSetter, deck)=>{
       this.state.deck.isFull = false
-      this.setState({isOpen:false, currentPos:0, show:false, deck:null})
+      this.setState({isOpen:false, currentPos:0, show:false, deck:null, dict: null})
     })
 
     registerReaction('repeat-modal', 'deck-rep', ['got-full'], (stSetter)=>this.setState({}))
@@ -37,8 +37,12 @@ const getContent = function(comp){
     return 'Loading...'
   }
 
+  if(comp.state.dict==null){
+    comp.state.dict = shuffle(createRepeatDict(comp.state.deck))
+  }
+
   return <div>
-          {getPanelUI(comp, createRepeatDict(comp.state.deck))}
+          {getPanelUI(comp, comp.state.dict)}
           </div>
 }
 
@@ -105,4 +109,19 @@ const showHandle = function(comp){
 
 const nextHandle = function(comp, repeatDict){
   comp.setState({currentPos: comp.state.currentPos+1, show:false})
+}
+
+/**
+ * Shuffles array in place.
+ * @param {Array} a items An array containing the items.
+ */
+function shuffle(a) {
+    var j, x, i;
+    for (i = a.length - 1; i > 0; i--) {
+        j = Math.floor(Math.random() * (i + 1));
+        x = a[i];
+        a[i] = a[j];
+        a[j] = x;
+    }
+    return a;
 }

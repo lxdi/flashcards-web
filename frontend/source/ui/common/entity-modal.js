@@ -21,7 +21,7 @@ const createState = function(isOpen, isStatic, isEdit, obj, parent){
   }
 }
 
-//props: name, full:true, mode:'update'/{parentValName}, repName, title, fields: [{type: 'text', label, valName}, {type:'list', valName, modalName, label, model}]
+//props: name, full:true, mode:'update'/{parentValName}, repName, title, fields: [{type: 'text', label, valName}, {type:'list', valName, modalName, label, model}], styleClass
 export class EntityModal extends React.Component {
   constructor(props){
     super(props)
@@ -45,7 +45,8 @@ export class EntityModal extends React.Component {
   }
 
   render(){
-    return <CommonModal isOpen = {this.state.isOpen} okHandler = {()=>okHandler(this, this.state.obj, this.state.parent)} cancelHandler={()=>fireEvent(this.props.name, 'close')} title={this.props.title} >
+    return <CommonModal isOpen = {this.state.isOpen} okHandler = {()=>okHandler(this, this.state.obj, this.state.parent)} cancelHandler={()=>fireEvent(this.props.name, 'close')} title={this.props.title}
+                          styleClass={this.props.styleClass}>
           {getContent(this)}
       </CommonModal>
   }

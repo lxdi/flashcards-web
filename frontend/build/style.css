@@ -15,6 +15,10 @@
   width:500px
 }
 
+.word-def-modal-class {
+  width:60%
+}
+
 .textfields-table-style {
     width: 100%;
     white-space: nowrap;
