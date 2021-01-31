@@ -12,7 +12,9 @@ import com.sogoodlabs.flashcardsapp.util.IdUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class DeckModifyService {
@@ -29,6 +31,9 @@ public class DeckModifyService {
     @Autowired
     private IWordLinkDao wordLinkDao;
 
+    @Autowired
+    private GracefulDeleteService gracefulDeleteService;
+
     public Deck modify(Deck deck){
 
         if(!IdUtils.isUUID(deck.getId())){
@@ -38,7 +43,15 @@ public class DeckModifyService {
         deckDao.save(deck);
 
         if(deck.getWords()!=null) {
-            deck.getWords().forEach(word -> modify(word, deck));
+            Set<String> ids = deck.getWords().stream()
+                    .peek(word -> modify(word, deck))
+                    .map(Word::getId)
+                    .collect(Collectors.toSet());
+
+            wordDao.findByDeck(deck).stream()
+                    .filter(word -> !ids.contains(word.getId()))
+                    .forEach(gracefulDeleteService::delete);
+
         }
 
         return deck;
@@ -53,11 +66,27 @@ public class DeckModifyService {
         wordDao.save(word);
 
         if(word.getWordDefs()!=null){
-            word.getWordDefs().forEach(wordDef -> modify(wordDef, word));
+
+            Set<String> ids = word.getWordDefs().stream()
+                    .peek(wordDef -> modify(wordDef, word))
+                    .map(WordDef::getId)
+                    .collect(Collectors.toSet());
+
+            wordDefDao.findByWord(word).stream()
+                    .filter(wordDef -> !ids.contains(wordDef.getId()))
+                    .forEach(gracefulDeleteService::delete);
         }
 
         if(word.getWordLinks()!=null){
-            word.getWordLinks().forEach(wordLink -> modify(wordLink, word));
+
+            Set<String> ids = word.getWordLinks().stream()
+                    .peek(wordLink -> modify(wordLink, word))
+                    .map(WordLink::getId)
+                    .collect(Collectors.toSet());
+
+            wordLinkDao.findByWord(word).stream()
+                    .filter(wordLink -> !ids.contains(wordLink.getId()))
+                    .forEach(gracefulDeleteService::delete);
         }
 
         return word;
