@@ -118,7 +118,7 @@ const getFieldsUI = function(comp){
     }
 
     if(field.type == 'list'){
-      result.push(<div style={{marginTop:'5px', border: '1px solid lightgrey', borderRadius:'10px', padding: '3px'}}>
+      result.push(<div style={{marginTop:'5px', border: '1px solid lightgrey', borderRadius:'10px', padding: '5px'}}>
                         <div>
                           <EntityList ents={comp.state.obj[field.valName]} modalName={field.modalName} model={field.model}/>
                         </div>
@@ -135,7 +135,7 @@ const getFieldsUI = function(comp){
 const textField = function(obj, valName, label, isEdit){
   return {
     key: valName,
-    label: <FormLabel>{label}</FormLabel>,
+    label: label,
     field: <StatefulTextField obj={obj} valName={valName} isEdit={isEdit}/>
   }
 }

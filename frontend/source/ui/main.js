@@ -13,17 +13,19 @@ export class Main extends React.Component {
 		super(props);
 		this.state = {}
 
-		registerReaction('main-ui', 'deck-rep', ['all-response'], (stSetter)=>this.setState({}))
+		registerReaction('main-ui', 'deck-rep', ['all-response', 'created', 'updated'], (stSetter)=>this.setState({}))
 	}
 
 	render() {
 		return (
-			<div>
+			<div style={{textAlign: 'center'}}>
 					{getModals()}
-					<div>
+					<div style={{marginBottom: '10px'}}>
+						<Button bsStyle="default" size='sm' onClick={() => fireEvent('deck-modal', 'open', [{id: 'new'}])}>Create Deck</Button>
+					</div>
+					<div style={{width:'50%', maxWidth:'800px', display: 'table', marginLeft: 'auto', marginRight:'auto'}}>
 						<EntityList ents='deck-rep' modalName='deck-modal' model={[{link:true, name:'Title', prop:'title'}, {custom: (deck)=>getRepeatLink(deck), name: '', style:{width: '20%'}}]} />
 					</div>
-					<Button bsStyle="default" size='sm' onClick={() => fireEvent('deck-modal', 'open', [{id: 'new'}])}>Create Deck</Button>
 			</div>
 		)
 	}
@@ -34,7 +36,7 @@ const getModals = function(){
 						<EntityModal title={'Deck'} name={'deck-modal'} full={true} mode={'update'} repName='deck-rep'
 									fields={[
 										{type:'text', valName:'title', label:'Title'},
-										{type:'list', valName:'words', modalName:'word-modal', label:'Word', model:[{link:true, name:'Value', prop:'value'}]}
+										{type:'list', valName:'words', modalName:'word-modal', label:'Word', model:[{link:true, name:'Word', prop:'value'}]}
 										]}
 									/>
 

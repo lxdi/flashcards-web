@@ -18,9 +18,12 @@ export class TextFields extends React.Component{
 
 const linesUI = function(content){
   const result = []
+  const actualFieldNameStyle = {width: maxLabelLength(content)*10+'px'}
+  Object.assign(actualFieldNameStyle, fieldNameStyle)
+
   for(var i in content){
     result.push( <tr key={content[i].key}>
-                    <td style={fieldNameStyle}>
+                    <td style={actualFieldNameStyle}>
                       <div style={{paddingRight:'3px'}}>
                         {content[i].label}
                       </div>
@@ -29,6 +32,16 @@ const linesUI = function(content){
                       {content[i].field}
                     </td>
                   </tr>)
+  }
+  return result
+}
+
+const maxLabelLength = function(content){
+  var result = 0
+  for(var i in content){
+    if(content[i].label.length>result){
+      result = content[i].label.length
+    }
   }
   return result
 }

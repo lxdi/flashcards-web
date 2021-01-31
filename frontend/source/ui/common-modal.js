@@ -16,8 +16,8 @@ export class CommonModal extends React.Component{
               {this.props.children}
             </div>
             <Modal.Footer>
-              {this.props.cancelHandler!=null?<Button onClick={this.props.cancelHandler}>{modalCancelTitle}</Button>:null}
-              {this.props.okHandler!=null?<Button bsStyle="primary" onClick={this.props.okHandler} >{modalOkTitle}</Button>:null}
+              {this.props.cancelHandler!=null?<Button variant="outline-primary" onClick={this.props.cancelHandler}>{modalCancelTitle}</Button>:null}
+              {this.props.okHandler!=null?<Button variant="primary" onClick={this.props.okHandler} >{modalOkTitle}</Button>:null}
             </Modal.Footer>
       </Modal>
     )

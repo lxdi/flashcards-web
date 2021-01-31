@@ -22,7 +22,7 @@ export class RepeatModal extends React.Component {
   }
 
   render(){
-      return <CommonModal isOpen = {this.state.isOpen} cancelHandler={()=>fireEvent('repeat-modal', 'close')} title={'Repeat'} styleClass='repeat-modal-class'>
+      return <CommonModal isOpen = {this.state.isOpen} cancelHandler={()=>fireEvent('repeat-modal', 'close')} title={'Repeat ' + (this.state.deck!=null?this.state.deck.title:'')} styleClass='repeat-modal-class'>
                 {getContent(this)}
             </CommonModal>
   }
@@ -71,7 +71,10 @@ const getPanelUI = function(comp, repeatDict){
   }
 
   return <div style={{width: '400px', padding:'5px', textAlign:'center'}}>
-          <div style={{border:'1px solid darkgrey', height:'300px', padding:'5px'}}>
+          <div style={{border:'1px solid lightgrey', borderRadius:'15px', height:'300px', padding:'5px'}}>
+            <div>
+              {comp.state.currentPos+1}/{repeatDict.length}
+            </div>
             <div>
               {comp.state.show?
                 <span style={{fontSize:'12pt', fontWeight:'bold', borderBottom: '1px solid grey'}}>{repeatDict[comp.state.currentPos].word}</span>
@@ -81,25 +84,29 @@ const getPanelUI = function(comp, repeatDict){
               {repeatDict[comp.state.currentPos].def}
             </div>
           </div>
-          <div>
-            {showButton(comp)}
-            {nextButton(comp, repeatDict)}
+          <div style = {{marginTop:'3px'}}>
+            <div style={{display:'inline-block', marginRight:'5px'}}>
+              {showButton(comp)}
+            </div>
+            <div style={{display:'inline-block'}}>
+              {nextButton(comp, repeatDict)}
+            </div>
           </div>
         </div>
-}
-
-const nextButton = function(comp, repeatDict){
-  if(comp.state.currentPos+1==repeatDict.length){
-    return
-  }
-  return <Button bsStyle="default" bsSize='xsmall' onClick={() => nextHandle(comp, repeatDict)}>Next</Button>
 }
 
 const showButton = function(comp){
   if(comp.state.show){
     return
   }
-  return <Button bsStyle="default" bsSize='xsmall' onClick={() => showHandle(comp)}>Show</Button>
+  return <Button variant="outline-warning" onClick={() => showHandle(comp)}>Show</Button>
+}
+
+const nextButton = function(comp, repeatDict){
+  if(comp.state.currentPos+1==repeatDict.length){
+    return
+  }
+  return <Button variant="primary" onClick={() => nextHandle(comp, repeatDict)}>Next</Button>
 }
 
 const showHandle = function(comp){
