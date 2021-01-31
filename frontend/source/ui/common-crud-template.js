@@ -28,14 +28,16 @@ export class CommonCrudeTemplate extends React.Component {
   render(){
     return (
         <div>
-          {!this.props.editing.isStatic? <Button size="sm" onClick={this.editAbilityHandler}>
-            {this.props.editing.isEdit? viewButtonTitle: editButton}
-          </Button>
+          {!this.props.editing.isStatic?
+            <Button variant='outline-secondary' size="sm" onClick={this.editAbilityHandler}>
+              {this.props.editing.isEdit? viewButtonTitle: editButton}
+            </Button>
           : null}
 
-          {!this.props.editing.isStatic && this.props.editing.isEdit && this.props.deleteHandler!=null? <Button bsStyle="danger" size="sm" onClick={this.props.deleteHandler}>
-            {deleteButton}
-          </Button>
+          {!this.props.editing.isStatic && this.props.editing.isEdit && this.props.deleteHandler!=null?
+            <Button variant="danger" size="sm" onClick={this.props.deleteHandler}>
+              {deleteButton}
+            </Button>
           : null}
 
           {this.props.children}

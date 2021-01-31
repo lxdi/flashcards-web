@@ -13,7 +13,7 @@ export class Main extends React.Component {
 		super(props);
 		this.state = {}
 
-		registerReaction('main-ui', 'deck-rep', ['all-response', 'created', 'updated'], (stSetter)=>this.setState({}))
+		registerReaction('main-ui', 'deck-rep', ['all-response', 'created', 'updated', 'deleted'], (stSetter)=>this.setState({}))
 	}
 
 	render() {

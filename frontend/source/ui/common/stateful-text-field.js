@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {FormControl} from 'react-bootstrap'
+import {Form} from 'react-bootstrap'
 import {TextField} from './text-field'
 
 
@@ -15,7 +15,7 @@ export class StatefulTextField extends React.Component {
       return <TextField obj={this.props.obj} valName={this.props.valName} onInput={this.props.onInput} />
     } else {
       const title = this.props.children!=null?this.props.children:this.props.obj[this.props.valName]
-      return <FormControl.Static>{title}</FormControl.Static>
+      return <Form.Label column sm="2">{title}</Form.Label>
     }
   }
 }

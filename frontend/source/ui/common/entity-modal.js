@@ -21,13 +21,21 @@ const createState = function(isOpen, isStatic, isEdit, obj, parent){
   }
 }
 
+const createStateAdv = function(isOpen, obj, parent){
+  if(obj.id == newObjId){
+    return createState(isOpen, true, true, obj, parent)
+  } else {
+    return createState(isOpen, false, false, obj, parent)
+  }
+}
+
 //props: name, full:true, mode:'update'/{parentValName}, repName, title, fields: [{type: 'text', label, valName}, {type:'list', valName, modalName, label, model}], styleClass
 export class EntityModal extends React.Component {
   constructor(props){
     super(props)
     this.state = createState(false, true, false);
 
-    registerEvent(this.props.name, 'open', (stateSetter, obj, parent) => this.setState(createState(true, true, true, obj, parent)))
+    registerEvent(this.props.name, 'open', (stateSetter, obj, parent) => this.setState(createStateAdv(true, obj, parent)))
 
     registerEvent(this.props.name, 'close', (stateSetter) => {
       if(this.props.full){
@@ -38,7 +46,10 @@ export class EntityModal extends React.Component {
 
     if(this.props.full){
       registerReaction(this.props.name, this.props.repName, ['got-full'], (stSetter)=>this.setState({}))
-      registerReaction(this.props.name, this.props.repName, ['updated', 'created'], ()=>fireEvent(this.props.name, 'close'))
+    }
+
+    if(this.props.mode == 'update'){
+      registerReaction(this.props.name, this.props.repName, ['updated', 'created', 'deleted'], ()=>fireEvent(this.props.name, 'close'))
     }
 
     registerReactionsForLists(this)
@@ -71,8 +82,10 @@ const getContent = function(comp){
       return 'Loading...'
     }
 
-    content = <CommonCrudeTemplate editing = {comp.state.mode} changeEditHandler = {comp.forceUpdate.bind(comp)} deleteHandler={()=>console.log('TODO deleting deck')}>
-                {getFieldsUI(comp)}
+    content = <CommonCrudeTemplate editing = {comp.state.mode} changeEditHandler = {comp.forceUpdate.bind(comp)} deleteHandler={()=>deleteHandler(comp, comp.state.obj, comp.state.parent)}>
+                <div style={{marginTop:'5px'}}>
+                  {getFieldsUI(comp)}
+                </div>
             </CommonCrudeTemplate>
   }
 
@@ -109,6 +122,24 @@ const okHandler = function(comp, obj, parent){
   }
 }
 
+const deleteHandler = function(comp, obj, parent){
+  if(comp.props.mode == 'update'){
+    if(obj.id!=newObjId){
+      fireEvent(comp.props.repName, 'delete', [obj])
+    } else {
+      fireEvent(comp.props.name, 'close')
+    }
+  } else {
+
+    if(obj.id!=newObjId){
+      const arr = parent[comp.props.mode.parentValName]
+      arr.splice(arr.indexOf(obj), 1)
+    }
+
+    fireEvent(comp.props.name, 'close')
+  }
+}
+
 const getFieldsUI = function(comp){
   const result = []
 
@@ -120,10 +151,12 @@ const getFieldsUI = function(comp){
     if(field.type == 'list'){
       result.push(<div style={{marginTop:'5px', border: '1px solid lightgrey', borderRadius:'10px', padding: '5px'}}>
                         <div>
-                          <EntityList ents={comp.state.obj[field.valName]} modalName={field.modalName} model={field.model}/>
+                          <EntityList ents={comp.state.obj[field.valName]} modalName={field.modalName} model={field.model} parent={comp.state.obj} />
                         </div>
                         <div>
-                          <Button variant="outline-primary" size="sm" onClick={() => fireEvent(field.modalName, 'open', [{id: newObjId}, comp.state.obj])}>Create {field.label}</Button>
+                          {comp.state.mode.isEdit?
+                            <Button variant="outline-primary" size="sm" onClick={() => fireEvent(field.modalName, 'open', [{id: newObjId}, comp.state.obj])}>Create {field.label}</Button>
+                            :null}
                         </div>
                       </div>)
     }
