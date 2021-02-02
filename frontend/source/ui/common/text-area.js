@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {FormControl, FormGroup} from 'react-bootstrap'
+import {Form} from 'react-bootstrap'
 
 //props: obj, valName, valNameUI, readOnly
 export class TextArea extends React.Component{
@@ -9,14 +9,13 @@ export class TextArea extends React.Component{
   }
 
   render(){
-    return <FormGroup controlId="formBasicText">
-                    <FormControl
+    return   <Form.Group controlId={this.props.id}>
+                <Form.Control as="textarea" rows={3}
                                 readOnly={this.props.readOnly!=null?this.props.readOnly:false}
-                                componentClass="textarea"
-                                type="input"
                                 value={this.props.obj[this.props.valName]}
-                                placeholder={"Enter "+(this.props.valNameUI!=null?this.props.valNameUI:this.props.valName)}
-                                onChange={(e)=>{this.props.obj[this.props.valName] = e.target.value; this.setState({})}}/>
-                </FormGroup>
+                                placeholder={(this.props.valNameUI!=null?this.props.valNameUI:this.props.valName)}
+                                onChange={(e)=>{this.props.obj[this.props.valName] = e.target.value; this.setState({})}}
+                                />
+              </Form.Group>
   }
 }

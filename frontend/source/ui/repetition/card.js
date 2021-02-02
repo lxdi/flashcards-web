@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 import {Button, ButtonToolbar,  DropdownButton, MenuItem,  FormGroup, FormControl, Alert} from 'react-bootstrap'
 import {registerEvent, registerReaction, fireEvent, chkSt} from 'absevents'
 
+import {TextArea} from '../common/text-area'
+
 //props: repeatDict
 export class Card extends React.Component {
   constructor(props){
@@ -33,6 +35,9 @@ const getPanelUI = function(comp, repeatDict){
             </div>
             <div>
               {repeatDict[comp.state.currentPos].def}
+            </div>
+            <div>
+              <TextArea id={repeatDict[comp.state.currentPos].def} obj={repeatDict[comp.state.currentPos]} valName={'example'} valNameUI={'Example'}/>
             </div>
           </div>
           <div style = {{marginTop:'3px'}}>
@@ -66,5 +71,6 @@ const showHandle = function(comp){
 }
 
 const nextHandle = function(comp, repeatDict){
+  console.log(repeatDict)
   comp.setState({currentPos: comp.state.currentPos+1, show:false})
 }
