@@ -7,6 +7,7 @@ import {registerEvent, registerReaction, fireEvent, chkSt, registerObject} from 
 import {EntityList} from './common/entity-list'
 import {EntityModal} from './common/entity-modal'
 import {RepeatModal} from './repetition/repeat-modal'
+import {WordsTable} from './words-table'
 
 export class Main extends React.Component {
 	constructor(props){
@@ -33,12 +34,11 @@ export class Main extends React.Component {
 
 const getModals = function(){
 	return <div>
-						<EntityModal title={'Deck'} name={'deck-modal'} full={true} mode={'update'} repName='deck-rep'
+						<EntityModal title={'Deck'} name={'deck-modal'} full={true} mode={'update'} repName='deck-rep' additionalReactions={['word-modal']} styleClass={'deck-modal-class'}
 									fields={[
 										{type:'text', valName:'title', label:'Title'},
-										{type:'list', valName:'words', modalName:'word-modal', label:'Word', model:[{link:true, name:'Word', prop:'value'}]}
-										]}
-									/>
+										{type:'custom', content: (deck, parent, isEdit)=> <WordsTable deck={deck} isEdit={isEdit} />}
+									]}/>
 
 						<EntityModal title={'Word'} name={'word-modal'} full={false} mode={{parentValName:'words'}} styleClass={'word-modal-class'}
 				              fields={[

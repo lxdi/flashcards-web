@@ -11,6 +11,10 @@
   margin: 5px;
 } */
 
+.deck-modal-class {
+  min-width: 700px;
+}
+
 .repeat-modal-class {
   min-width:500px
 }

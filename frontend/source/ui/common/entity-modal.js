@@ -29,7 +29,8 @@ const createStateAdv = function(isOpen, obj, parent){
   }
 }
 
-//props: name, full:true, mode:'update'/{parentValName}, repName, title, fields: [{type: 'text', label, valName}, {type:'list', valName, modalName, label, model}], styleClass
+//props: name, full:true, mode:'update'/{parentValName}, repName, title, styleClass, additionalReactions:['modal-name']
+//       fields: [{type: 'text', label, valName}, {type:'list', valName, modalName, label, model}, {type: 'custom', content: function(obj, parent, isEdit)}]
 export class EntityModal extends React.Component {
   constructor(props){
     super(props)
@@ -70,6 +71,9 @@ const registerReactionsForLists = function(comp){
         registerReaction(comp.props.modalName, field.modalName, ['close'], (stSetter)=>comp.setState({}))
       }
     })
+  }
+  if(comp.props.additionalReactions!=null){
+    comp.props.additionalReactions.forEach(modalName => registerReaction(comp.props.modalName, modalName, ['close'], (stSetter)=>comp.setState({})))
   }
 }
 
@@ -159,6 +163,10 @@ const getFieldsUI = function(comp){
                             :null}
                         </div>
                       </div>)
+    }
+
+    if(field.type == 'custom'){
+      result.push(field.content(comp.state.obj, comp.state.parent, comp.state.mode.isEdit))
     }
   })
 
