@@ -3,8 +3,8 @@ import ReactDOM from 'react-dom';
 import {Button, ButtonToolbar,  DropdownButton, MenuItem,  FormGroup, FormControl, Alert} from 'react-bootstrap'
 import {registerEvent, registerReaction, fireEvent, chkSt} from 'absevents'
 
-import {CommonModal} from '../common-modal'
-import {CommonCrudeTemplate} from '../common-crud-template'
+import {CommonModal} from '../common/common-modal'
+import {CommonCrudeTemplate} from '../common/common-crud-template'
 
 import {Card} from './card'
 

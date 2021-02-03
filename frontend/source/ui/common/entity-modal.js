@@ -3,8 +3,8 @@ import ReactDOM from 'react-dom';
 import {Button, FormLabel} from 'react-bootstrap'
 import {registerEvent, registerReaction, fireEvent, chkSt} from 'absevents'
 
-import {CommonModal} from '../common-modal'
-import {CommonCrudeTemplate} from '../common-crud-template'
+import {CommonModal} from './common-modal'
+import {CommonCrudeTemplate} from './common-crud-template'
 import {StatefulTextField} from './stateful-text-field'
 import {TextFields} from './text-fields'
 import {EntityList} from './entity-list'

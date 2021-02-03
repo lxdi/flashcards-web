@@ -1,4 +1,3 @@
-import {deleteButton, editButton, viewButtonTitle} from './../titles'
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {CommonModal} from './common-modal'
@@ -30,14 +29,12 @@ export class CommonCrudeTemplate extends React.Component {
         <div>
           {!this.props.editing.isStatic?
             <Button variant='outline-secondary' size="sm" onClick={this.editAbilityHandler}>
-              {this.props.editing.isEdit? viewButtonTitle: editButton}
+              {this.props.editing.isEdit? 'View': 'Edit'}
             </Button>
           : null}
 
           {!this.props.editing.isStatic && this.props.editing.isEdit && this.props.deleteHandler!=null?
-            <Button variant="danger" size="sm" onClick={this.props.deleteHandler}>
-              {deleteButton}
-            </Button>
+            <Button variant="danger" size="sm" onClick={this.props.deleteHandler}>Delete</Button>
           : null}
 
           {this.props.children}
