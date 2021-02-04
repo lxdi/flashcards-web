@@ -32,14 +32,17 @@ export class WordsTable extends React.Component {
 
 const getTrs = function(comp, deck){
   const result = []
-  for(var i = 0; i<deck['words'].length; i++){
+  const arrFieldName = 'words'
+
+  if(deck[arrFieldName] == null){
+    deck[arrFieldName] = []
+  }
+  
+  for(var i = 0; i<deck[arrFieldName].length; i++){
     const tds = []
-    // for(var j = i; j<i+3 && j<deck['words'].length; j++){
-    //     tds.push(getTd(deck['words'][i++], deck))
-    // }
-    tds.push(getTd(deck['words'][i++], deck))
-    tds.push(getTd(deck['words'][i++], deck))
-    tds.push(getTd(deck['words'][i], deck))
+    tds.push(getTd(deck[arrFieldName][i++], deck))
+    tds.push(getTd(deck[arrFieldName][i++], deck))
+    tds.push(getTd(deck[arrFieldName][i], deck))
     result.push(<tr>{tds}</tr>)
   }
   return result
