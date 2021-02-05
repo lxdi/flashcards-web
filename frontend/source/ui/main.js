@@ -49,11 +49,18 @@ const getModals = function(){
 				              />
 
 						<EntityModal title={'Word Definition'} name={'word-def-modal'} full={false} mode={{parentValName:'wordDefs'}} styleClass={'word-def-modal-class'}
-											fields={[{type:'text', valName:'definition', label:'Definition'}]}
+											fields={[
+												{type:'text', valName:'definition', label:'Definition'},
+												{type:'list', valName:'hints', modalName:'word-def-hint-modal', label:'Hints', model:[{link:true, name:'Hint', prop:'hint'}]}
+											]}
 											/>
 
 						<EntityModal title={'Word Link'} name={'word-link-modal'} full={false} mode={{parentValName:'wordLinks'}}
 											fields={[{type:'text', valName:'url', label:'Url'}]}
+											/>
+
+						<EntityModal title={'Word Def Hint'} name={'word-def-hint-modal'} full={false} mode={{parentValName:'hints'}}
+											fields={[{type:'text', valName:'hint', label:'Hint'}]}
 											/>
 
 						<RepeatModal/>

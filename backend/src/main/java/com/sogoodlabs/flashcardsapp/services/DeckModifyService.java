@@ -1,13 +1,7 @@
 package com.sogoodlabs.flashcardsapp.services;
 
-import com.sogoodlabs.flashcardsapp.model.dao.IDeckDao;
-import com.sogoodlabs.flashcardsapp.model.dao.IWordDao;
-import com.sogoodlabs.flashcardsapp.model.dao.IWordDefDao;
-import com.sogoodlabs.flashcardsapp.model.dao.IWordLinkDao;
-import com.sogoodlabs.flashcardsapp.model.entities.Deck;
-import com.sogoodlabs.flashcardsapp.model.entities.Word;
-import com.sogoodlabs.flashcardsapp.model.entities.WordDef;
-import com.sogoodlabs.flashcardsapp.model.entities.WordLink;
+import com.sogoodlabs.flashcardsapp.model.dao.*;
+import com.sogoodlabs.flashcardsapp.model.entities.*;
 import com.sogoodlabs.flashcardsapp.util.IdUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,6 +26,9 @@ public class DeckModifyService {
     private IWordLinkDao wordLinkDao;
 
     @Autowired
+    private IWordDefHintDao wordDefHintDao;
+
+    @Autowired
     private GracefulDeleteService gracefulDeleteService;
 
     public Deck modify(Deck deck){
@@ -51,7 +48,6 @@ public class DeckModifyService {
             wordDao.findByDeck(deck).stream()
                     .filter(word -> !ids.contains(word.getId()))
                     .forEach(gracefulDeleteService::delete);
-
         }
 
         return deck;
@@ -100,6 +96,19 @@ public class DeckModifyService {
 
         wordDef.setWord(word);
         wordDefDao.save(wordDef);
+
+        if(wordDef.getHints()!=null){
+
+            Set<String> ids = wordDef.getHints().stream()
+                    .peek(wordDefHint -> modify(wordDefHint, wordDef))
+                    .map(WordDefHint::getId)
+                    .collect(Collectors.toSet());
+
+            wordDefHintDao.findByWordDef(wordDef).stream()
+                    .filter(wordLink -> !ids.contains(wordLink.getId()))
+                    .forEach(gracefulDeleteService::delete);
+        }
+
         return wordDef;
     }
 
@@ -112,6 +121,17 @@ public class DeckModifyService {
         wordLink.setWord(word);
         wordLinkDao.save(wordLink);
         return wordLink;
+    }
+
+    private WordDefHint modify(WordDefHint wordDefHint, WordDef wordDef){
+
+        if(!IdUtils.isUUID(wordDefHint.getId())){
+            wordDefHint.setId(UUID.randomUUID().toString());
+        }
+
+        wordDefHint.setWordDef(wordDef);
+        wordDefHintDao.save(wordDefHint);
+        return wordDefHint;
     }
 
 

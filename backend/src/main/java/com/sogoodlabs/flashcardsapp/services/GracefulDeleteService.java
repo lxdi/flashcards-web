@@ -1,13 +1,7 @@
 package com.sogoodlabs.flashcardsapp.services;
 
-import com.sogoodlabs.flashcardsapp.model.dao.IDeckDao;
-import com.sogoodlabs.flashcardsapp.model.dao.IWordDao;
-import com.sogoodlabs.flashcardsapp.model.dao.IWordDefDao;
-import com.sogoodlabs.flashcardsapp.model.dao.IWordLinkDao;
-import com.sogoodlabs.flashcardsapp.model.entities.Deck;
-import com.sogoodlabs.flashcardsapp.model.entities.Word;
-import com.sogoodlabs.flashcardsapp.model.entities.WordDef;
-import com.sogoodlabs.flashcardsapp.model.entities.WordLink;
+import com.sogoodlabs.flashcardsapp.model.dao.*;
+import com.sogoodlabs.flashcardsapp.model.entities.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +20,9 @@ public class GracefulDeleteService {
     @Autowired
     private IWordLinkDao wordLinkDao;
 
+    @Autowired
+    private IWordDefHintDao wordDefHintDao;
+
     public void delete(Deck deck){
         wordDao.findByDeck(deck).forEach(this::delete);
         deckDao.delete(deck);
@@ -38,7 +35,12 @@ public class GracefulDeleteService {
     }
 
     public void delete(WordDef wordDef){
+        wordDefHintDao.findByWordDef(wordDef).forEach(this::delete);
         wordDefDao.delete(wordDef);
+    }
+
+    public void delete(WordDefHint wordDefHint){
+        wordDefHintDao.delete(wordDefHint);
     }
 
     public void delete(WordLink wordLink){

@@ -1,9 +1,10 @@
 package com.sogoodlabs.flashcardsapp.model.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import com.sogoodlabs.common_mapper.annotations.IncludeInDto;
+import com.sogoodlabs.common_mapper.annotations.MapToClass;
+
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class WordDef {
@@ -15,6 +16,9 @@ public class WordDef {
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Word word;
+
+    @Transient
+    private List<WordDefHint> hints;
 
     public String getId() {
         return id;
@@ -38,5 +42,15 @@ public class WordDef {
 
     public void setDefinition(String definition) {
         this.definition = definition;
+    }
+
+    @IncludeInDto
+    public List<WordDefHint> getHints() {
+        return hints;
+    }
+
+    @MapToClass(value = WordDefHint.class)
+    public void setHints(List<WordDefHint> hints) {
+        this.hints = hints;
     }
 }
