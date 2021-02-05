@@ -61,7 +61,11 @@ const createRepeatDict = function(deck){
   const result = []
   deck.words.forEach(word => {
     word.wordDefs.forEach(wordDef => {
-      result.push({def: wordDef.definition, word: word.value, example:''})
+      result.push({def: wordDef.definition,
+                  word: word.value,
+                  example:'',
+                  hints: wordDef.hints!=null?wordDef.hints:[]
+                })
     })
   })
   return result
