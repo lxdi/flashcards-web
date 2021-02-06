@@ -50,6 +50,9 @@ const getPanelUI = function(comp, repeatDict){
             <div style={{display:'inline-block', marginRight:'5px'}}>
               {showWordButton(comp, dictDef)}
             </div>
+            <div style={{display:'inline-block', marginRight:'5px'}}>
+              {missButton(comp, repeatDict, dictDef)}
+            </div>
             <div style={{display:'inline-block'}}>
               {nextButton(comp, repeatDict)}
             </div>
@@ -57,55 +60,46 @@ const getPanelUI = function(comp, repeatDict){
         </div>
 }
 
-const hintUI = function(comp, dictDef){
-  if(dictDef.hints.length < 1){
-    return null
-  }
-
-  if(dictDef.showHints){
-    const result = []
-    dictDef.hints.forEach(hint => result.push(<div style={{color:'grey'}}>{hintTextUI(hint.hint)}</div>))
-    return result
-  }
-
-  return <Button size="sm" variant="outline-warning" onClick={() => {
-      dictDef.showHints = true
-      comp.setState({})
-    }}>Show hints</Button>
-}
-
-const hintTextUI = function(hintOriginal){
-  if(!hintOriginal.includes('[') || !hintOriginal.includes(']')){
-    return hintOriginal
-  }
-  const firstPart = hintOriginal.substr(0, hintOriginal.indexOf('['))
-  const secondPart = hintOriginal.substr(hintOriginal.indexOf(']')+1, hintOriginal.length)
-  return <span>{firstPart} <a href='#'> *** </a>  {secondPart}</span>
-}
-
 const showWordButton = function(comp, dictDef){
-  if(dictDef.showWord){
+  if(dictDef.showWord || comp.state.finished){
     return
   }
+
   return <Button variant="outline-warning" onClick={() => {
       dictDef.showWord = true
       comp.setState({})
     }}>Show word</Button>
 }
 
-const nextButton = function(comp, repeatDict){
-  if(comp.state.currentPos+1==repeatDict.length){
+const missButton = function(comp, repeatDict, dictDef){
+  if(dictDef.showWord || comp.state.finished){
     return
   }
-  return <Button variant="primary" onClick={() => nextHandle(comp, repeatDict)}>Next</Button>
+
+  return <Button variant="outline-danger" onClick={() => {
+      dictDef.missed = true
+      if(comp.state.currentPos+1==repeatDict.length){
+        comp.setState({finished: true, show:false})
+      } else {
+        comp.setState({currentPos: comp.state.currentPos+1, show:false})
+      }
+    }}>Miss</Button>
 }
 
+const nextButton = function(comp, repeatDict){
+  if(comp.state.finished){
+    return
+  }
+  var title = 'Next'
+  if(comp.state.currentPos+1==repeatDict.length){
+    title = 'Finish'
+  }
 
-const showHandle = function(comp){
-  comp.state.show = true
-  comp.setState({})
-}
-
-const nextHandle = function(comp, repeatDict){
-  comp.setState({currentPos: comp.state.currentPos+1, show:false})
+  return <Button variant="primary" onClick={() => {
+    if(comp.state.currentPos+1==repeatDict.length){
+      comp.setState({finished: true, show:false})
+    } else {
+      comp.setState({currentPos: comp.state.currentPos+1, show:false})
+    }
+  }}>{title}</Button>
 }

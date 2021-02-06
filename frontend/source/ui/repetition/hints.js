@@ -38,7 +38,7 @@ const hintsUI = function(comp, hints){
 
 const hintTextUI = function(comp, hint){
   if(hint.disclosed || !hint.hint.includes('[') || !hint.hint.includes(']')){
-    return hint.hint.replace('[', '').replace(']', '')
+    return hint.hint.replaceAll('[', '').replaceAll(']', '')
   }
 
   const hideMark = '***'
