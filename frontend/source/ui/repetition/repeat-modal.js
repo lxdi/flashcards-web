@@ -5,8 +5,7 @@ import {registerEvent, registerReaction, fireEvent, chkSt} from 'absevents'
 
 import {CommonModal} from '../common/common-modal'
 import {CommonCrudeTemplate} from '../common/common-crud-template'
-
-import {Card} from './card'
+import {Cards} from './cards'
 
 export class RepeatModal extends React.Component {
   constructor(props){
@@ -44,7 +43,7 @@ const getContent = function(comp){
   }
 
   return <div>
-            <Card repeatDict={comp.state.dict} />
+            <Cards repeatDict={comp.state.dict} />
           </div>
 }
 
