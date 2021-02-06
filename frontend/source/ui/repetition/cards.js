@@ -72,7 +72,7 @@ const showWordButton = function(comp, dictDef){
 }
 
 const missButton = function(comp, repeatDict, dictDef){
-  if(dictDef.showWord || comp.state.finished){
+  if(comp.state.finished){
     return
   }
 
