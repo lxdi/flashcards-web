@@ -7,6 +7,7 @@ import {registerEvent, registerReaction, fireEvent, chkSt, registerObject} from 
 import {EntityList} from './common/entity-list'
 import {EntityModal} from './common/entity-modal'
 import {RepeatModal} from './repetition/repeat-modal'
+import {ReportModal} from './repetition/report-modal'
 import {WordsTable} from './words-table'
 
 export class Main extends React.Component {
@@ -64,6 +65,7 @@ const getModals = function(){
 											/>
 
 						<RepeatModal/>
+						<ReportModal/>
 					</div>
 }
 

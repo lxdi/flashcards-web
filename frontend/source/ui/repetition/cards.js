@@ -88,7 +88,7 @@ const missButton = function(comp, repeatDict, dictDef){
 
 const nextButton = function(comp, repeatDict){
   if(comp.state.finished){
-    return
+    return reportButton(repeatDict)
   }
   var title = 'Next'
   if(comp.state.currentPos+1==repeatDict.length){
@@ -102,4 +102,8 @@ const nextButton = function(comp, repeatDict){
       comp.setState({currentPos: comp.state.currentPos+1, show:false})
     }
   }}>{title}</Button>
+}
+
+const reportButton = function(repeatDict){
+  return  <Button variant="primary" onClick={() => fireEvent('report-modal', 'open', [repeatDict])}>Report</Button>
 }
