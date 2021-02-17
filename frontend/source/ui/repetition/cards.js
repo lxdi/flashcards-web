@@ -40,7 +40,7 @@ const getPanelUI = function(comp, repeatDict){
             </div>
             <div style = {{margin:'3px', borderTop:'1px solid lightgrey', width:'200px', marginLeft: '100px'}} />
             <div>
-              <Hints hints={dictDef.hints} />
+              <Hints id={dictDef.def} hints={dictDef.hints} />
             </div>
             <div style={{marginTop:'5px'}}>
               <TextArea id={dictDef.def} obj={dictDef} valName={'example'} valNameUI={'Example'}/>

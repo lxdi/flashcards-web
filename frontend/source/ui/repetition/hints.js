@@ -10,6 +10,7 @@ export class Hints extends React.Component {
   constructor(props){
     super(props)
     this.state = {}
+    this.props = {showHints: false}
   }
 
   render(){
@@ -24,14 +25,14 @@ const hintsUI = function(comp, hints){
     return null
   }
 
-  if(comp.state.showHints){
+  if(comp.props.showHints){
     const result = []
     comp.props.hints.forEach(hint => result.push(<div style={{color:'grey'}}>{hintTextUI(comp, hint)}</div>))
     return result
   }
 
   return <Button size="sm" variant="outline-warning" onClick={() => {
-      comp.state.showHints = true
+      comp.props.showHints = true
       comp.setState({})
     }}>Show hints</Button>
 }
